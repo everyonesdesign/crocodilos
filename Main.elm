@@ -22,15 +22,25 @@ type Msg = Reset
 
 view : Model -> Html Msg
 view model =
-  div [class "container"] [
+  div [class "container app-container text-center"] [
     div [class "row"] [
-      select [] [
-        option [] [text "Русский"]
-      ],
-      button [class "btn btn-default"] [text "Играть"]
+      div [class "col-sm-12 col-xs-12"] [
+        div [class "word"] [
+          div [class "word-body"] [
+            text "Hello"
+          ],
+          div [class "word-wtf"] [
+            a [href "#"] [
+              text "Что это?"
+            ]
+          ]
+        ]
+      ]
     ],
-    div [class "task"] [
-      text "Hello"
+    div [class "row"] [
+      div [class "col-sm-12 col-xs-12"] [
+        button [class "btn btn-primary"] [text "Новое слово!"]
+      ]
     ]
   ]
 
