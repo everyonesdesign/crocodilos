@@ -4,6 +4,7 @@ import Html.Events exposing (onClick)
 import Html.App
 import Random
 import Array
+import Regex
 import Dictionary exposing (..)
 
 
@@ -39,6 +40,20 @@ update msg model =
 
 
 -- VIEW
+getHelpLink : Maybe String -> String -> Html Msg
+getHelpLink helpPattern word =
+    case helpPattern of
+        Just pattern ->
+            div [class "word-wtf"] [
+                a [
+                    href (Regex.replace Regex.All (Regex.regex "%s") (\_ -> word) pattern),
+                    target "_blank"
+                ] [
+                    text "Что это?"
+                ]
+            ]
+        Nothing ->
+            Html.text ""
 
 view : Model -> Html Msg
 view model =
@@ -55,11 +70,7 @@ view model =
                         div [class "word-body"] [
                             text givenWord
                         ],
-                        div [class "word-wtf"] [
-                            a [href "#"] [
-                                text "Что это?"
-                            ]
-                        ]
+                        getHelpLink model.dictionary.helpPattern givenWord
                     ]
                 ]
             ],
@@ -83,7 +94,7 @@ view model =
 model = {
         word = Nothing,
         dictionary = {
-            helpPattern = Nothing,
+            helpPattern = Just "https://www.lingvolive.com/ru-ru/translate/en-ru/%s",
             words = Array.fromList ["hello", "cat", "dog"]
         }
     }
