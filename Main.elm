@@ -41,30 +41,30 @@ view model =
 
     getMarkup : String -> Html Msg
     getMarkup givenWord =
-      div [class "container app-container text-center"] [
-        div [class "row"] [
-          div [class "col-sm-12 col-xs-12"] [
-            div [class "word"] [
-              div [class "word-body"] [
-                text givenWord
-              ],
-              div [class "word-wtf"] [
-                a [href "#"] [
-                  text "Что это?"
+        div [class "container app-container text-center"] [
+            div [class "row"] [
+                div [class "col-sm-12 col-xs-12"] [
+                    div [class "word"] [
+                        div [class "word-body"] [
+                            text givenWord
+                        ],
+                        div [class "word-wtf"] [
+                            a [href "#"] [
+                                text "Что это?"
+                            ]
+                        ]
+                    ]
                 ]
-              ]
+            ],
+            div [class "row"] [
+                div [class "col-sm-12 col-xs-12"] [
+                    button [
+                        class "btn btn-primary",
+                        onClick GetNewWord
+                    ] [text "Новое слово!"]
+                ]
             ]
-          ]
-        ],
-        div [class "row"] [
-          div [class "col-sm-12 col-xs-12"] [
-            button [
-                class "btn btn-primary",
-                onClick GetNewWord
-            ] [text "Новое слово!"]
-          ]
         ]
-      ]
   in
     case word of
       Just string -> getMarkup string
