@@ -24,8 +24,8 @@ getNewWordCmd : Model -> Cmd Msg
 getNewWordCmd model =
     let
         wordsLength = (Array.length model.dictionary.words) - 1
-        in
-            Random.generate NewWord (Random.int 0 wordsLength)
+    in
+        Random.generate NewWord (Random.int 0 wordsLength)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -57,36 +57,36 @@ getHelpLink helpPattern word =
 
 view : Model -> Html Msg
 view model =
-  let
-    word : Maybe String
-    word = model.word
+    let
+        word : Maybe String
+        word = model.word
 
-    getMarkup : String -> Html Msg
-    getMarkup givenWord =
-        div [class "container app-container text-center"] [
-            div [class "row"] [
-                div [class "col-sm-12 col-xs-12"] [
-                    div [class "word"] [
-                        div [class "word-body"] [
-                            text givenWord
-                        ],
-                        getHelpLink model.dictionary.helpPattern givenWord
+        getMarkup : String -> Html Msg
+        getMarkup givenWord =
+            div [class "container app-container text-center"] [
+                div [class "row"] [
+                    div [class "col-sm-12 col-xs-12"] [
+                        div [class "word"] [
+                            div [class "word-body"] [
+                                text givenWord
+                            ],
+                            getHelpLink model.dictionary.helpPattern givenWord
+                        ]
+                    ]
+                ],
+                div [class "row"] [
+                    div [class "col-sm-12 col-xs-12"] [
+                        button [
+                            class "btn btn-primary",
+                            onClick GetNewWord
+                        ] [text "Новое слово!"]
                     ]
                 ]
-            ],
-            div [class "row"] [
-                div [class "col-sm-12 col-xs-12"] [
-                    button [
-                        class "btn btn-primary",
-                        onClick GetNewWord
-                    ] [text "Новое слово!"]
-                ]
             ]
-        ]
-  in
-    case word of
-      Just string -> getMarkup string
-      Nothing -> getMarkup ""
+    in
+        case word of
+            Just string -> getMarkup string
+            Nothing -> getMarkup ""
 
 
 -- INIT
