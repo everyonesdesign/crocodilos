@@ -5,7 +5,7 @@ import Html.App
 import Random
 import Array
 import Regex
-import Dictionary exposing (..)
+import Dictionary exposing (Dictionary)
 
 
 -- MODEL
