@@ -71,6 +71,8 @@ view model =
       Nothing -> getMarkup ""
 
 
+-- INIT
+
 main =
     Html.App.program
         {
