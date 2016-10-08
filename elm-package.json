@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
-    "summary": "simple game on words",
-    "repository": "https://github.com/user/project.git",
+    "summary": "a simple helper for charades game",
+    "repository": "https://github.com/everyonesdesign/crocodilos.git",
     "license": "MIT",
     "source-directories": [
         "."
