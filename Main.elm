@@ -19,6 +19,13 @@ type alias Model = {
 
 type Msg = GetNewWord | NewWord Int
 
+getNewWordCmd : Model -> Cmd Msg
+getNewWordCmd model =
+    let
+        wordsLength = (Array.length model.dictionary.words) - 1
+        in
+            Random.generate NewWord (Random.int 0 wordsLength)
+
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     let
@@ -26,7 +33,7 @@ update msg model =
     in
         case msg of
             GetNewWord ->
-                (model, Random.generate NewWord (Random.int 0 wordsLength))
+                (model, getNewWordCmd model)
             NewWord index ->
                 ({model | word = Array.get index model.dictionary.words}, Cmd.none)
 
@@ -73,16 +80,18 @@ view model =
 
 -- INIT
 
+model = {
+        word = Nothing,
+        dictionary = {
+            helpPattern = Nothing,
+            words = Array.fromList ["hello", "cat", "dog"]
+        }
+    }
+
 main =
     Html.App.program
         {
-            init = ({
-                word = Nothing,
-                dictionary = {
-                    helpPattern = Nothing,
-                    words = Array.fromList ["hello", "cat", "dog"]
-                }
-            }, Cmd.none),
+            init = (model, getNewWordCmd model),
             view = view,
             subscriptions = \m -> Sub.none,
             update = update
