@@ -6,7 +6,7 @@ import Random
 import Array
 import Regex
 import Http
-import Task exposing (Task, perform)
+import Task
 import Json.Decode as Decode exposing (Decoder, array, maybe, object2, string, (:=))
 import Dictionary exposing (Dictionary)
 
