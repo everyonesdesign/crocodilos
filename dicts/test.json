@@ -1,0 +1,9 @@
+{
+  "helpPattern": "http://test.com/%s",
+  "words": [
+    "leg",
+    "cat",
+    "hair",
+    "sun"
+  ]
+}

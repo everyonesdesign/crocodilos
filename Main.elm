@@ -5,6 +5,9 @@ import Html.App
 import Random
 import Array
 import Regex
+import Http
+import Task exposing (Task, perform)
+import Json.Decode as Decode exposing (Decoder, array, maybe, object2, string, (:=))
 import Dictionary exposing (Dictionary)
 
 
@@ -18,7 +21,12 @@ type alias Model = {
 
 -- UPDATE
 
-type Msg = GetNewWord | NewWord Int
+type Msg
+    = GetNewWord
+    | NewWord Int
+    | Fetch String
+    | FetchSuccess Dictionary
+    | FetchFail
 
 getNewWordCmd : Model -> Cmd Msg
 getNewWordCmd model =
@@ -26,6 +34,24 @@ getNewWordCmd model =
         wordsLength = (Array.length model.dictionary.words) - 1
     in
         Random.generate NewWord (Random.int 0 wordsLength)
+
+fetchDictionary : String -> Cmd Msg
+fetchDictionary url =
+    Task.perform
+        (\x -> FetchFail)
+        (\dictionary -> FetchSuccess dictionary)
+        (Http.get decode url)
+
+
+dictFromResult (a, b) =
+    {helpPattern = a, words = b}
+
+decode : Decoder Dictionary
+decode =
+    Decode.map dictFromResult
+        (object2 (,)
+            (maybe ("helpPattern" := string))
+            ("words" := array string))
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -37,6 +63,12 @@ update msg model =
                 (model, getNewWordCmd model)
             NewWord index ->
                 ({model | word = Array.get index model.dictionary.words}, Cmd.none)
+            FetchSuccess dictionary ->
+                ({model | dictionary = dictionary}, getNewWordCmd model)
+            FetchFail ->
+                (model, Cmd.none)
+            Fetch url ->
+                (model, fetchDictionary url)
 
 
 -- VIEW
@@ -99,11 +131,9 @@ model = {
         }
     }
 
-main =
-    Html.App.program
-        {
-            init = (model, getNewWordCmd model),
-            view = view,
-            subscriptions = \m -> Sub.none,
-            update = update
-        }
+main = Html.App.program {
+        init = (model, fetchDictionary "dicts/test.json"),
+        view = view,
+        subscriptions = \m -> Sub.none,
+        update = update
+    }
