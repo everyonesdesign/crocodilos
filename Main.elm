@@ -123,8 +123,8 @@ view model =
 model = {
         word = Nothing,
         dictionary = {
-            helpPattern = Just "https://www.lingvolive.com/ru-ru/translate/en-ru/%s",
-            words = Array.fromList ["hello", "cat", "dog"]
+            helpPattern = Just "",
+            words = Array.fromList []
         }
     }
 
