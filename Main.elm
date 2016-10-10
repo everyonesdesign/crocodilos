@@ -40,16 +40,13 @@ fetchDictionary url =
     Task.perform
         (\x -> FetchFail)
         (\dictionary -> FetchSuccess dictionary)
-        (Http.get decode url)
+        (Http.get decoder url)
 
 
-dictFromResult (a, b) =
-    {helpPattern = a, words = b}
-
-decode : Decoder Dictionary
-decode =
-    Decode.map dictFromResult
-        (object2 (,)
+decoder : Decoder Dictionary
+decoder =
+        (object2
+            (\a b -> {helpPattern = a, words = b})
             (maybe ("helpPattern" := string))
             ("words" := array string))
 
