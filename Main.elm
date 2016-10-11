@@ -69,6 +69,7 @@ update msg model =
 
 
 -- VIEW
+
 getHelpLink : Maybe String -> String -> Html Msg
 getHelpLink helpPattern word =
     case helpPattern of
