@@ -107,7 +107,7 @@ view model =
                 div [class "row"] [
                     div [class "col-sm-12 col-xs-12"] [
                         button [
-                            class "btn btn-primary",
+                            class "button",
                             onClick GetNewWord
                         ] [text "Новое слово!"]
                     ]
