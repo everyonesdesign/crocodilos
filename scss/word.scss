@@ -1,6 +1,6 @@
 [class^=word-] {
     text-align: center;
-    font: 16px/1.3 Helvetica, "Helvetica Neue", Arial, sans-serif;
+    @include sansSerif(14px);
 }
 
 .word- {
@@ -11,4 +11,8 @@
     margin-bottom: 10px;
     font-size: 24px;
     font-weight: bold;
+}
+
+.word-button {
+    @include button;
 }
