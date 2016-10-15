@@ -1,4 +1,4 @@
-module Dictionary exposing (..)
+module Crocodilos.Dictionary exposing (..)
 
 import Array exposing (Array)
 

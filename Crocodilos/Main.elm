@@ -1,3 +1,5 @@
+module Crocodilos.Main exposing (..)
+
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (on, onClick, targetValue)
@@ -9,7 +11,7 @@ import Http
 import Task
 import Capitalize
 import Json.Decode as Json exposing (Decoder, array, maybe, object2, string, (:=))
-import Dictionary exposing (Dictionary)
+import Crocodilos.Dictionary exposing (Dictionary)
 
 
 -- MODEL
