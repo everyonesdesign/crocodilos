@@ -7,6 +7,7 @@ import Array
 import Regex
 import Http
 import Task
+import Capitalize
 import Json.Decode as Json exposing (Decoder, array, maybe, object2, string, (:=))
 import Dictionary exposing (Dictionary)
 
@@ -127,7 +128,7 @@ view model =
                     div [class "col-sm-12 col-xs-12"] [
                         div [class "word-"] [
                             div [class "word-body"] [
-                                text givenWord
+                                text (Capitalize.toCapital givenWord)
                             ],
                             getHelpLink model.dictionary givenWord
                         ]
