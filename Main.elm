@@ -17,6 +17,7 @@ import Dictionary exposing (Dictionary)
 type alias Model = {
     word: Maybe String,
     selectedUrl: String,
+    isFetching: Bool,
     dictionaries: List { name: String, url: String },
     dictionary: Maybe Dictionary
 }
@@ -70,19 +71,16 @@ update msg model =
                 Nothing ->
                     ({model | word = Nothing}, Cmd.none)
         FetchSuccess dictionary ->
-            let 
-                newModel = {model | dictionary = Just dictionary}
-            in 
-                (newModel, getNewWordCmd newModel)
+            let newModel = {model | dictionary = Just dictionary, isFetching = False}
+            in (newModel, getNewWordCmd newModel)
         FetchFail ->
-            (model, Cmd.none)
+            ({model | isFetching = False}, Cmd.none)
         Fetch ->
-            (model, fetchDictionary model)
+            let newModel = {model | isFetching = True}
+            in (newModel, fetchDictionary newModel)
         ToggleDictionary newUrl ->
-            let 
-                newModel = {model | selectedUrl = newUrl}
-            in 
-                (newModel, fetchDictionary newModel)
+            let newModel = {model | selectedUrl = newUrl}
+            in (newModel, fetchDictionary newModel)
 
 
 -- VIEW
@@ -113,9 +111,6 @@ onChange tagger =
 view : Model -> Html Msg
 view model =
     let
-        word : Maybe String
-        word = model.word
-
         getMarkup : String -> Html Msg
         getMarkup givenWord =
             div [class "container app-container text-center"] [
@@ -144,9 +139,9 @@ view model =
                 ]
             ]
     in
-        case word of
-            Just string -> getMarkup string
-            Nothing -> getMarkup ""
+        case (model.word, model.isFetching) of
+            (Just string, False) -> getMarkup string
+            (_, _) -> getMarkup "..."
 
 
 -- INIT
@@ -157,6 +152,7 @@ model = {
             { name = "English", url = "dicts/en.json"}, 
             { name = "Русский", url = "dicts/ru.json"}
         ],
+        isFetching = False,
         selectedUrl = "dicts/en.json",
         dictionary = Nothing
     }
