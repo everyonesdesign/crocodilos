@@ -15,4 +15,10 @@
     &button {
         @include button;
     }
+
+    &wtf {
+        &, &:hover {
+            color: $link;
+        }
+    }
 }
