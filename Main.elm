@@ -113,29 +113,23 @@ view model =
     let
         getMarkup : String -> Html Msg
         getMarkup givenWord =
-            div [class "container app-container text-center"] [
+            div [] [
                 select [onChange ToggleDictionary, class "dictSelect-"] 
                     (List.map 
                         (\dict -> option [value dict.url] [text dict.name]) 
                         model.dictionaries),
 
-                div [class "row"] [
-                    div [class "col-sm-12 col-xs-12"] [
-                        div [class "word-"] [
-                            div [class "word-body"] [
-                                text (Capitalize.toCapital givenWord)
-                            ],
-                            getHelpLink model.dictionary givenWord
-                        ]
-                    ]
+                div [class "word-"] [
+                    div [class "word-body"] [
+                        text (Capitalize.toCapital givenWord)
+                    ],
+                    getHelpLink model.dictionary givenWord
                 ],
-                div [class "row"] [
-                    div [class "word-buttonContainer col-sm-12 col-xs-12"] [
-                        button [
-                            class "word-button",
-                            onClick GetNewWord
-                        ] [text "Новое слово!"]
-                    ]
+                div [class "word-buttonContainer"] [
+                    button [
+                        class "word-button",
+                        onClick GetNewWord
+                    ] [text "Новое слово!"]
                 ]
             ]
     in

@@ -4,12 +4,14 @@
 }
 
 .word- {
+    clear: both;
     padding: 24px 0 36px;
     
     &body {
         margin-bottom: 14px;
         font-size: 32px;
         font-weight: bold;
+        text-align: center;
     }
 
     &button {
@@ -19,6 +21,7 @@
     &wtf {
         &, &:hover {
             color: $link;
+            text-decoration: none
         }
     }
 }
