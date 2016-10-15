@@ -74,10 +74,11 @@ getHelpLink : Maybe String -> String -> Html Msg
 getHelpLink helpPattern word =
     case helpPattern of
         Just pattern ->
-            div [class "word-wtf"] [
+            div [class "word-wtfContainer"] [
                 a [
                     href (Regex.replace Regex.All (Regex.regex "%s") (\_ -> word) pattern),
-                    target "_blank"
+                    target "_blank",
+                    class "word-wtf"
                 ] [
                     text "Что это?"
                 ]
@@ -96,7 +97,7 @@ view model =
             div [class "container app-container text-center"] [
                 div [class "row"] [
                     div [class "col-sm-12 col-xs-12"] [
-                        div [class "word"] [
+                        div [class "word-"] [
                             div [class "word-body"] [
                                 text givenWord
                             ],
@@ -105,9 +106,9 @@ view model =
                     ]
                 ],
                 div [class "row"] [
-                    div [class "col-sm-12 col-xs-12"] [
+                    div [class "word-buttonContainer col-sm-12 col-xs-12"] [
                         button [
-                            class "button",
+                            class "word-button",
                             onClick GetNewWord
                         ] [text "Новое слово!"]
                     ]

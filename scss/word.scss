@@ -1,0 +1,18 @@
+[class^=word-] {
+    text-align: center;
+    @include sansSerif(14px);
+}
+
+.word- {
+    padding: 20px 0 30px;
+    
+    &body {
+        margin-bottom: 10px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    &button {
+        @include button;
+    }
+}

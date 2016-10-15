@@ -1,4 +1,5 @@
+.idea/
+.sass-cache
+build
 elm-stuff/
 repl-temp-*
-.idea/
-build
