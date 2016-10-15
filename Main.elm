@@ -1,13 +1,13 @@
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (on, onClick, targetValue)
 import Html.App
 import Random
 import Array
 import Regex
 import Http
 import Task
-import Json.Decode as Decode exposing (Decoder, array, maybe, object2, string, (:=))
+import Json.Decode as Json exposing (Decoder, array, maybe, object2, string, (:=))
 import Dictionary exposing (Dictionary)
 
 
@@ -15,7 +15,8 @@ import Dictionary exposing (Dictionary)
 
 type alias Model = {
     word: Maybe String,
-    dictionaryUrl: String,
+    selectedUrl: String,
+    dictionaryUrls: List String,
     dictionary: Maybe Dictionary
 }
 
@@ -28,6 +29,7 @@ type Msg
     | Fetch
     | FetchSuccess Dictionary
     | FetchFail
+    | ToggleDictionary String
 
 getNewWordCmd : Model -> Cmd Msg
 getNewWordCmd model =
@@ -45,7 +47,7 @@ fetchDictionary model =
     Task.perform
         (\x -> FetchFail)
         (\dictionary -> FetchSuccess dictionary)
-        (Http.get decoder model.dictionaryUrl)
+        (Http.get decoder model.selectedUrl)
 
 
 decoder : Decoder Dictionary
@@ -75,6 +77,11 @@ update msg model =
             (model, Cmd.none)
         Fetch ->
             (model, fetchDictionary model)
+        ToggleDictionary newUrl ->
+            let 
+                newModel = {model | selectedUrl = newUrl}
+            in 
+                (newModel, fetchDictionary newModel)
 
 
 -- VIEW
@@ -99,6 +106,9 @@ getHelpLink dictionary word =
         Nothing ->
             Html.text ""
 
+onChange tagger =
+  on "change" (Json.map tagger targetValue)
+
 view : Model -> Html Msg
 view model =
     let
@@ -108,6 +118,9 @@ view model =
         getMarkup : String -> Html Msg
         getMarkup givenWord =
             div [class "container app-container text-center"] [
+                select [onChange ToggleDictionary, class "dictSelect-"] 
+                    (List.map (\u -> option [] [text u]) model.dictionaryUrls),
+
                 div [class "row"] [
                     div [class "col-sm-12 col-xs-12"] [
                         div [class "word-"] [
@@ -137,7 +150,8 @@ view model =
 
 model = {
         word = Nothing,
-        dictionaryUrl = "dicts/test.json",
+        dictionaryUrls = ["dicts/en.json", "dicts/ru.json"],
+        selectedUrl = "dicts/en.json",
         dictionary = Nothing
     }
 
