@@ -1,0 +1,10 @@
+.dictSelect- {
+    margin: 10px 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    color: #9B9B9B;
+    @include sansSerif(14px);
+}
