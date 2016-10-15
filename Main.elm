@@ -151,7 +151,10 @@ init flags =
                 word = Nothing,
                 dictionaries = flags.dictionaries,
                 isFetching = False,
-                selectedUrl = "dicts/en.json",
+                selectedUrl =
+                    case (List.head flags.dictionaries) of
+                        Just obj -> obj.url
+                        Nothing -> "",
                 dictionary = Nothing
             }
     in
