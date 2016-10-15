@@ -1,13 +1,13 @@
 [class^=word-] {
     text-align: center;
-    @include sansSerif(14px);
+    @include sansSerif(16px);
 }
 
 .word- {
-    padding: 20px 0 30px;
+    padding: 24px 0 36px;
     
     &body {
-        margin-bottom: 10px;
+        margin-bottom: 14px;
         font-size: 32px;
         font-weight: bold;
     }
