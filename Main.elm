@@ -89,7 +89,7 @@ getHelpLink : Maybe Dictionary -> String -> Html Msg
 getHelpLink dictionary word =
     case dictionary of
         Just dictionary ->
-            case dictionary.helpPattern of 
+            case dictionary.helpPattern of
                 Just pattern ->
                     div [class "word-wtfContainer"] [
                         a [
@@ -114,9 +114,9 @@ view model =
         getMarkup : String -> Html Msg
         getMarkup givenWord =
             div [] [
-                select [onChange ToggleDictionary, class "dictSelect-"] 
-                    (List.map 
-                        (\dict -> option [value dict.url] [text dict.name]) 
+                select [onChange ToggleDictionary, class "dictSelect-"]
+                    (List.map
+                        (\dict -> option [value dict.url] [text dict.name])
                         model.dictionaries),
 
                 div [class "word-"] [
@@ -140,19 +140,25 @@ view model =
 
 -- INIT
 
-model = {
-        word = Nothing,
-        dictionaries = [
-            { name = "English", url = "dicts/en.json"}, 
-            { name = "Русский", url = "dicts/ru.json"}
-        ],
-        isFetching = False,
-        selectedUrl = "dicts/en.json",
-        dictionary = Nothing
-    }
+type alias Flags = {
+    dictionaries: List { name: String, url: String }
+}
 
-main = Html.App.program {
-        init = (model, (fetchDictionary model)),
+init : Flags -> (Model, Cmd Msg)
+init flags =
+    let
+        model = {
+                word = Nothing,
+                dictionaries = flags.dictionaries,
+                isFetching = False,
+                selectedUrl = "dicts/en.json",
+                dictionary = Nothing
+            }
+    in
+        (model, (fetchDictionary model))
+
+main = Html.App.programWithFlags {
+        init = init,
         view = view,
         subscriptions = \m -> Sub.none,
         update = update
