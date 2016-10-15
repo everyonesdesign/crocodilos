@@ -16,7 +16,7 @@ import Dictionary exposing (Dictionary)
 type alias Model = {
     word: Maybe String,
     selectedUrl: String,
-    dictionaryUrls: List String,
+    dictionaries: List { name: String, url: String },
     dictionary: Maybe Dictionary
 }
 
@@ -119,7 +119,9 @@ view model =
         getMarkup givenWord =
             div [class "container app-container text-center"] [
                 select [onChange ToggleDictionary, class "dictSelect-"] 
-                    (List.map (\u -> option [] [text u]) model.dictionaryUrls),
+                    (List.map 
+                        (\dict -> option [value dict.url] [text dict.name]) 
+                        model.dictionaries),
 
                 div [class "row"] [
                     div [class "col-sm-12 col-xs-12"] [
@@ -150,7 +152,10 @@ view model =
 
 model = {
         word = Nothing,
-        dictionaryUrls = ["dicts/en.json", "dicts/ru.json"],
+        dictionaries = [
+            { name = "English", url = "dicts/en.json"}, 
+            { name = "Русский", url = "dicts/ru.json"}
+        ],
         selectedUrl = "dicts/en.json",
         dictionary = Nothing
     }
