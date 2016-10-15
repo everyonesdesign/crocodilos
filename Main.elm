@@ -67,7 +67,10 @@ update msg model =
                 Nothing ->
                     ({model | word = Nothing}, Cmd.none)
         FetchSuccess dictionary ->
-            ({model | dictionary = Just dictionary}, getNewWordCmd model)
+            let 
+                newModel = {model | dictionary = Just dictionary}
+            in 
+                (newModel, getNewWordCmd newModel)
         FetchFail ->
             (model, Cmd.none)
         Fetch ->
