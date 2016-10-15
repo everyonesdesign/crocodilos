@@ -1,5 +1,6 @@
 .idea/
 .sass-cache
+dictionaries
 build
 elm-stuff/
 repl-temp-*
