@@ -5,14 +5,14 @@
 
 .word- {
     padding: 20px 0 30px;
-}
+    
+    &body {
+        margin-bottom: 10px;
+        font-size: 24px;
+        font-weight: bold;
+    }
 
-.word-body {
-    margin-bottom: 10px;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.word-button {
-    @include button;
+    &button {
+        @include button;
+    }
 }
