@@ -5,6 +5,8 @@ A simple helper for charades game written in beautiful Elm language.
 
 Demo: http://everyonesdesign.ru/apps/crocodilos/current/
 
+Taskboard: https://trello.com/b/4vKbpXOS/crocodilos
+
 ## Concept
 
 The app is written to try [Elm language](http://elm-lang.org/) in action. 
