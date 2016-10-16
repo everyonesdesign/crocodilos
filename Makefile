@@ -6,6 +6,3 @@ elm:
 
 css:
 	sass scss/style.scss build/style.css
-
-deploy:
-	make elm && make css
