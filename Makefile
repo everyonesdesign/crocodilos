@@ -2,7 +2,10 @@ all:
 	make elm && make css
 
 elm:
-	elm make Crocodilos/Main.elm --output build/main.js
+	elm make --yes Crocodilos/Main.elm --output build/main.js
 
 css:
 	sass scss/style.scss build/style.css
+
+deploy:
+	make elm && make css
